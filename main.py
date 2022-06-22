@@ -15,9 +15,10 @@ def load_data(dataset):
     if dataset == 'digits':
         ds = load_digits()
         df = load_digits(as_frame=True)
-    if dataset == 'iris':
+    elif dataset == 'iris':
         ds = load_iris()
         df = load_iris(as_frame=True)
+
     X_train, X_test, y_train, y_test = train_test_split(
         ds.data, ds.target,
         train_size=train_size, test_size=test_size,
@@ -52,11 +53,10 @@ if __name__ == "__main__":
     os.makedirs(checkpoint_folder, exist_ok=False)
     output_folder = 'tpot_output'
     os.makedirs(output_folder, exist_ok=False)
-    verbosity = 0
+
     n_jobs = -1
-    times = []
-    best_pipes = []
-    scores = []
+    verbosity = 0
+    times, best_pipes, scores = [], [], []
 
     # Load (and display?) data
     X_train, X_test, y_train, y_test, df = load_data(dataset)
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     for pipe in best_pipes:
         if first_pipe != str(pipe):
             result = False
-    if (result):
+    if result:
         st.write("\n__All best pipelines were the same:__\n")
         st.write(best_pipes[0])
     else:
